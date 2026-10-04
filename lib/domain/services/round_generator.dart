@@ -103,7 +103,7 @@ final class RoundGenerator {
 
     final selectedWord = wordPool[random.nextInt(wordPool.length)];
     final playerIds = players.map((player) => player.id).toList();
-    final impostorIds = _selectImpostors(playerIds, settings.impostorCount);
+    final imposterIds = _selectImposters(playerIds, settings.imposterCount);
     final startingPlayerId = playerIds[random.nextInt(playerIds.length)];
     final phoneOrder = _shuffle(playerIds);
 
@@ -124,7 +124,7 @@ final class RoundGenerator {
         secretWord: selectedWord.word.trim(),
         hint: selectedWord.hint?.trim(),
         players: players,
-        impostorIds: impostorIds,
+        imposterIds: imposterIds,
         hintsEnabled: settings.hintsEnabled,
         startingPlayerId: startingPlayerId,
         phoneOrder: phoneOrder,
@@ -132,7 +132,7 @@ final class RoundGenerator {
     );
   }
 
-  Set<String> _selectImpostors(List<String> playerIds, int count) {
+  Set<String> _selectImposters(List<String> playerIds, int count) {
     final candidates = List<String>.of(playerIds);
     for (var index = 0; index < count; index++) {
       final selectedIndex = index + random.nextInt(candidates.length - index);

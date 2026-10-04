@@ -7,7 +7,7 @@ final class SharedPreferencesWordHistoryRepository
   SharedPreferencesWordHistoryRepository({SharedPreferencesAsync? preferences})
     : _preferences = preferences ?? SharedPreferencesAsync();
 
-  static const String _storageKey = 'impostor.recentWordIds';
+  static const String _storageKey = 'imposter.recentWordIds';
 
   final SharedPreferencesAsync _preferences;
 

@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:impostor/domain/models/category.dart';
-import 'package:impostor/domain/models/game_issue.dart';
-import 'package:impostor/domain/models/game_settings.dart';
-import 'package:impostor/domain/models/player.dart';
-import 'package:impostor/domain/validation/game_validator.dart';
+import 'package:imposter/domain/models/category.dart';
+import 'package:imposter/domain/models/game_issue.dart';
+import 'package:imposter/domain/models/game_settings.dart';
+import 'package:imposter/domain/models/player.dart';
+import 'package:imposter/domain/validation/game_validator.dart';
 
 void main() {
   const categories = [Category(id: 'food', name: 'Food')];
 
-  GameSettings settings(int impostorCount) => GameSettings(
-    impostorCount: impostorCount,
+  GameSettings settings(int imposterCount) => GameSettings(
+    imposterCount: imposterCount,
     selectedCategoryIds: const {'food'},
   );
 
@@ -51,7 +51,7 @@ void main() {
     }
   });
 
-  test('rejects invalid impostor counts and duplicate player names', () {
+  test('rejects invalid imposter counts and duplicate player names', () {
     for (final count in [0, 3]) {
       final issues = GameValidator.validateSetup(
         players: players(3),
@@ -60,7 +60,7 @@ void main() {
       );
       expect(
         issues.map((issue) => issue.code),
-        contains(GameIssueCode.invalidImpostorCount),
+        contains(GameIssueCode.invalidImposterCount),
       );
     }
 
@@ -105,7 +105,7 @@ void main() {
         Player(id: 'three', name: 'C'),
       ],
       categories: categories,
-      settings: GameSettings(impostorCount: 1, selectedCategoryIds: const {}),
+      settings: GameSettings(imposterCount: 1, selectedCategoryIds: const {}),
     );
 
     final codes = issues.map((issue) => issue.code);

@@ -1,18 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:impostor/data/local/in_memory_word_history_repository.dart';
-import 'package:impostor/domain/models/category.dart';
-import 'package:impostor/domain/models/difficulty.dart';
-import 'package:impostor/domain/models/game_issue.dart';
-import 'package:impostor/domain/models/game_settings.dart';
-import 'package:impostor/domain/models/player.dart';
-import 'package:impostor/domain/models/reveal_payload.dart';
-import 'package:impostor/domain/models/word_entry.dart';
-import 'package:impostor/domain/random/random_source.dart';
-import 'package:impostor/domain/services/round_generation_result.dart';
-import 'package:impostor/domain/services/round_generator.dart';
-import 'package:impostor/domain/services/word_history_repository.dart';
+import 'package:imposter/data/local/in_memory_word_history_repository.dart';
+import 'package:imposter/domain/models/category.dart';
+import 'package:imposter/domain/models/difficulty.dart';
+import 'package:imposter/domain/models/game_issue.dart';
+import 'package:imposter/domain/models/game_settings.dart';
+import 'package:imposter/domain/models/player.dart';
+import 'package:imposter/domain/models/reveal_payload.dart';
+import 'package:imposter/domain/models/word_entry.dart';
+import 'package:imposter/domain/random/random_source.dart';
+import 'package:imposter/domain/services/round_generation_result.dart';
+import 'package:imposter/domain/services/round_generator.dart';
+import 'package:imposter/domain/services/word_history_repository.dart';
 
 const category = Category(id: 'food', name: 'Food');
 
@@ -46,11 +46,11 @@ final words = [
 ];
 
 GameSettings settings({
-  int impostors = 2,
+  int imposters = 2,
   bool hints = true,
   bool noRepeat = false,
 }) => GameSettings(
-  impostorCount: impostors,
+  imposterCount: imposters,
   selectedCategoryIds: const {'food'},
   hintsEnabled: hints,
   noRepeatEnabled: noRepeat,
@@ -86,11 +86,11 @@ void main() {
           gameSettings: settings(),
         )).round;
 
-        expect(round.impostorIds, hasLength(2));
-        expect(round.impostorIds.length, 2);
+        expect(round.imposterIds, hasLength(2));
+        expect(round.imposterIds.length, 2);
         expect(
           players.map((player) => player.id),
-          containsAll(round.impostorIds),
+          containsAll(round.imposterIds),
         );
         expect(
           players.map((player) => player.id),
@@ -104,8 +104,8 @@ void main() {
 
         for (final player in players) {
           final payload = round.revealPayloadFor(player.id)!;
-          if (round.impostorIds.contains(player.id)) {
-            expect(payload.role, PlayerRole.impostor);
+          if (round.imposterIds.contains(player.id)) {
+            expect(payload.role, PlayerRole.imposter);
             expect(payload.secretWord, isNull);
             expect(payload.hint, isNotEmpty);
             expect(payload.hint, isNot(round.secretWord));
@@ -119,7 +119,7 @@ void main() {
     },
   );
 
-  test('impostors do not receive a word when hints are disabled', () async {
+  test('imposters do not receive a word when hints are disabled', () async {
     final round = (await createRound(
       generator: RoundGenerator(
         random: SeededRandomSource(11),
@@ -128,9 +128,9 @@ void main() {
       gameSettings: settings(hints: false),
     )).round;
 
-    for (final playerId in round.impostorIds) {
+    for (final playerId in round.imposterIds) {
       final payload = round.revealPayloadFor(playerId)!;
-      expect(payload.role, PlayerRole.impostor);
+      expect(payload.role, PlayerRole.imposter);
       expect(payload.secretWord, isNull);
       expect(payload.hint, isNull);
     }
@@ -187,7 +187,7 @@ void main() {
       expect(identical(first, replay), isFalse);
       expect(replay.secretWordId, isNot(first.secretWordId));
       expect(replay.players, players);
-      expect(replay.impostorIds, hasLength(2));
+      expect(replay.imposterIds, hasLength(2));
     },
   );
 

@@ -40,7 +40,7 @@ Requirements:
 - injectable randomness;
 - validated player/settings inputs;
 - random secret word;
-- unique impostors;
+- unique imposters;
 - random starting player;
 - randomized phone order;
 - correct reveal payloads;

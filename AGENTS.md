@@ -1,13 +1,13 @@
-# AGENTS.md — Impostor
+# AGENTS.md — Imposter
 
 ## 1. Project identity
 
-**Project:** Impostor  
+**Project:** Imposter
 **Product type:** Offline-first mobile party game  
 **Primary platform:** Android  
 **Future platform:** iOS  
 **Primary interaction model:** One phone passed between players  
-**Core mechanic:** Most players receive the same secret word; one or more randomly selected impostors do not.
+**Core mechanic:** Most players receive the same secret word; one or more randomly selected imposters do not.
 
 The purpose of this file is to tell coding agents how to work safely and consistently in this repository.
 
@@ -22,9 +22,9 @@ The following are contractual requirements for the core game:
 1. The game must be playable on one physical phone.
 2. No account, sign-in, internet connection, or second device is required for the core gameplay.
 3. Players can be added, removed, renamed, and reordered before a round.
-4. The game supports a configurable number of impostors, subject to validity rules in `docs/GAME_RULES.md`.
+4. The game supports a configurable number of imposters, subject to validity rules in `docs/GAME_RULES.md`.
 5. Words come from built-in categories initially, with architecture supporting custom categories/words.
-6. Impostors are selected randomly and independently for each round.
+6. Imposters are selected randomly and independently for each round.
 7. The starting player is selected randomly for each round.
 8. The app does not provide an in-app voting system.
 9. Players discuss and vote manually outside the app.
@@ -114,7 +114,7 @@ The domain/game engine owns:
 - player validation;
 - game-setting validation;
 - word selection;
-- impostor selection;
+- imposter selection;
 - starting-player selection;
 - reveal payload generation;
 - round lifecycle rules;
@@ -179,15 +179,15 @@ Never use predictable hard-coded randomness.
 Secret information includes:
 
 - secret word;
-- impostor status;
-- impostor hint;
+- imposter status;
+- imposter hint;
 - any derived information that can reveal the secret or role.
 
 Rules:
 
 1. Keep secret state in memory only for as long as needed.
 2. Do not persist per-player secret assignments unless there is an explicit requirement.
-3. Do not log secret words, impostor identities, or reveal payloads in production logs.
+3. Do not log secret words, imposter identities, or reveal payloads in production logs.
 4. Do not put secrets into analytics events.
 5. Do not include secrets in crash-reporting metadata.
 6. When the reveal is hidden, ensure the secret is no longer rendered.
@@ -205,7 +205,7 @@ There should be a single authoritative game session state.
 
 Avoid duplicated representations such as:
 
-- one impostor list in the controller;
+- one imposter list in the controller;
 - another in the screen;
 - another inferred from widgets.
 
@@ -248,7 +248,7 @@ Starting Player
   ↓
 Discussion
   ↓
-Result / Reveal Impostors
+Result / Reveal Imposters
   ↓
 Play Again or New Game
 ```
@@ -307,7 +307,7 @@ Expected invalid input should be represented explicitly, not through generic exc
 Examples:
 
 - too few players;
-- too many impostors;
+- too many imposters;
 - empty player name;
 - category with no usable words;
 - impossible no-repeat selection.
@@ -374,9 +374,9 @@ Every meaningful game-rule change requires tests.
 At minimum, test:
 
 - player validation;
-- impostor-count validation;
+- imposter-count validation;
 - random assignment invariants;
-- unique impostors;
+- unique imposters;
 - valid starting player;
 - valid reveal payloads;
 - no-repeat word behavior;
@@ -395,16 +395,16 @@ For any valid round:
 
 ```text
 playerCount >= 3
-1 <= impostorCount
-impostorCount < playerCount
-all impostors are distinct players
+1 <= imposterCount
+imposterCount < playerCount
+all imposters are distinct players
 all normal players receive the same secret word
-no impostor receives the secret word as their primary payload
+no imposter receives the secret word as their primary payload
 startingPlayer is one of the players
 phoneOrder contains every player exactly once
 ```
 
-If hint mode is enabled, the impostor receives a non-empty hint associated with the selected word. The hint must not equal the secret word.
+If hint mode is enabled, the imposter receives a non-empty hint associated with the selected word. The hint must not equal the secret word.
 
 ---
 
@@ -455,7 +455,7 @@ Prefer commits such as:
 ```text
 feat: add player setup flow
 feat: implement round engine
-test: cover impostor assignment
+test: cover imposter assignment
 feat: add custom categories
 fix: clear reveal state on app background
 ```

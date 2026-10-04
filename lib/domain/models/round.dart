@@ -7,19 +7,19 @@ final class Round {
     required this.secretWord,
     required this.hint,
     required List<Player> players,
-    required Set<String> impostorIds,
+    required Set<String> imposterIds,
     required this.hintsEnabled,
     required this.startingPlayerId,
     required List<String> phoneOrder,
   }) : players = List.unmodifiable(players),
-       impostorIds = Set.unmodifiable(impostorIds),
+       imposterIds = Set.unmodifiable(imposterIds),
        phoneOrder = List.unmodifiable(phoneOrder);
 
   final String secretWordId;
   final String secretWord;
   final String? hint;
   final List<Player> players;
-  final Set<String> impostorIds;
+  final Set<String> imposterIds;
   final bool hintsEnabled;
   final String startingPlayerId;
   final List<String> phoneOrder;
@@ -27,10 +27,10 @@ final class Round {
   RevealPayload? revealPayloadFor(String playerId) {
     if (!players.any((player) => player.id == playerId)) return null;
 
-    if (impostorIds.contains(playerId)) {
+    if (imposterIds.contains(playerId)) {
       return RevealPayload(
         playerId: playerId,
-        role: PlayerRole.impostor,
+        role: PlayerRole.imposter,
         hint: hintsEnabled ? hint : null,
       );
     }

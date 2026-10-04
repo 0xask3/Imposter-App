@@ -1,4 +1,4 @@
-# Roadmap — Impostor
+# Roadmap — Imposter
 
 ## Phase 0 — Repository foundation
 
@@ -34,7 +34,7 @@ Deliverables:
 - validation;
 - random source abstraction;
 - word selection;
-- impostor selection;
+- imposter selection;
 - starting-player selection;
 - reveal payload generation;
 - phone-order generation;
@@ -63,6 +63,10 @@ Deliverables:
 Acceptance:
 
 - a valid game can be configured entirely through the UI.
+
+Implementation note: Phase 2 uses a small authored seed catalog so category,
+difficulty, and hint settings can be validated against real entries. This is
+only a development-sized seed; the larger initial catalog remains Phase 5.
 
 ---
 

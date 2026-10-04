@@ -1,7 +1,7 @@
-# Impostor
+# Imposter
 
 An offline-first mobile party game for groups sharing one phone. Most players
-receive the same secret word while one or more impostors receive only their role
+receive the same secret word while one or more imposters receive only their role
 and, optionally, a hint.
 
 ## Development

@@ -1,4 +1,4 @@
-# Architecture — Impostor
+# Architecture — Imposter
 
 ## 1. Goal
 
@@ -72,7 +72,7 @@ iconKey
 ### GameSettings
 
 ```text
-impostorCount
+imposterCount
 selectedCategoryIds
 difficultyFilter
 hintsEnabled
@@ -88,7 +88,7 @@ secretWord?
 hint?
 ```
 
-For an impostor, `secretWord` must be null.
+For an imposter, `secretWord` must be null.
 
 ### Round
 
@@ -98,7 +98,7 @@ secretWordId
 secretWord
 hint
 players
-impostorIds
+imposterIds
 startingPlayerId
 phoneOrder
 revealPayloads
@@ -130,7 +130,7 @@ abstract interface class WordSelector {
 }
 
 abstract interface class RoleAssigner {
-  Set<String> selectImpostors(...);
+  Set<String> selectImposters(...);
 }
 
 abstract interface class PlayerOrderSelector {
@@ -165,11 +165,11 @@ Do not tie the engine to `dart:math.Random` in ways that make tests nondetermini
 
 ## 6. Selection algorithms
 
-A standard unbiased sampling algorithm may be used for selecting distinct impostors.
+A standard unbiased sampling algorithm may be used for selecting distinct imposters.
 
 Fisher-Yates or equivalent should be used for shuffling where appropriate.
 
-Do not select impostors by repeatedly generating random indexes without handling duplicates correctly.
+Do not select imposters by repeatedly generating random indexes without handling duplicates correctly.
 
 ---
 
@@ -280,7 +280,7 @@ Production logs must not contain:
 
 - secret word;
 - hint;
-- impostor IDs/names;
+- imposter IDs/names;
 - reveal payload;
 - full round serialization.
 

@@ -1,4 +1,4 @@
-# UI / UX Specification — Impostor
+# UI / UX Specification — Imposter
 
 ## 1. Visual direction
 
@@ -47,7 +47,7 @@ Home
 Primary:
 
 ```text
-IMPOSTOR
+IMPOSTER
 
 [ New Game ]
 ```
@@ -107,10 +107,10 @@ Show the most important settings first.
 
 Suggested order:
 
-1. Impostor count
+1. Imposter count
 2. Categories
 3. Difficulty
-4. Impostor hint
+4. Imposter hint
 5. Optional advanced settings
 
 Primary CTA:
@@ -184,12 +184,12 @@ Remember your word.
 
 The secret should be visually prominent.
 
-### Impostor
+### Imposter
 
 After reveal:
 
 ```text
-YOU ARE THE IMPOSTOR
+YOU ARE THE IMPOSTER
 
 Hint:
 ITALIAN FOOD
@@ -202,7 +202,7 @@ Remember your hint.
 If hints are disabled:
 
 ```text
-YOU ARE THE IMPOSTOR
+YOU ARE THE IMPOSTER
 
 You do not know the word.
 
@@ -263,12 +263,12 @@ Then:
 JOHN STARTS
 
 Discuss. Give clues.
-Find the impostor.
+Find the imposter.
 
 [ Continue ]
 ```
 
-The chosen player can be an impostor.
+The chosen player can be an imposter.
 
 ---
 
@@ -308,7 +308,7 @@ Vote manually first.
 After reveal:
 
 ```text
-THE IMPOSTOR(S)
+THE IMPOSTER(S)
 
 SARAH
 DAVID
@@ -342,7 +342,7 @@ Preserve:
 Generate a new:
 
 - word;
-- impostors;
+- imposters;
 - starting player;
 - phone order.
 
@@ -385,7 +385,7 @@ Haptics should be subtle.
 
 Sound should be off or unobtrusive by default unless product decisions later specify otherwise.
 
-Never use a sound that explicitly announces "impostor" or another secret in a shared environment.
+Never use a sound that explicitly announces "imposter" or another secret in a shared environment.
 
 ---
 

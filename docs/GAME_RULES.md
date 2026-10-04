@@ -1,19 +1,19 @@
-# Game Rules — Impostor
+# Game Rules — Imposter
 
 ## 1. Basic rule
 
 A round has:
 
 - one secret word;
-- one or more impostors;
+- one or more imposters;
 - one starting player;
-- zero or more hints for impostors.
+- zero or more hints for imposters.
 
 Every normal player receives the secret word.
 
-Every impostor receives:
+Every imposter receives:
 
-- their impostor role;
+- their imposter role;
 - optionally, a hint;
 - never the secret word.
 
@@ -37,20 +37,20 @@ The engine must reject counts outside this range.
 
 ---
 
-## 3. Valid impostor count
+## 3. Valid imposter count
 
 The rule is:
 
 ```text
-1 <= impostorCount < playerCount
+1 <= imposterCount < playerCount
 ```
 
 Therefore:
 
 ```text
-3 players → max 2 impostors
-4 players → max 3 impostors
-10 players → max 9 impostors
+3 players → max 2 imposters
+4 players → max 3 imposters
+10 players → max 9 imposters
 ```
 
 However, the UI should discourage extreme configurations because they reduce gameplay quality.
@@ -59,16 +59,16 @@ A future rule may introduce recommended maximums without changing the mathematic
 
 ---
 
-## 4. Random impostor selection
+## 4. Random imposter selection
 
 For each round:
 
-- select exactly `impostorCount` distinct players;
+- select exactly `imposterCount` distinct players;
 - all players must have an equal probability of being selected, assuming the configured random source is unbiased;
 - no player may be selected twice;
-- previous-round impostor status must not influence the next selection unless a future explicit rule adds balancing.
+- previous-round imposter status must not influence the next selection unless a future explicit rule adds balancing.
 
-The app should not try to "make it fair" by forcing a player to become impostor after they have not been selected recently. That would alter the intended randomness.
+The app should not try to "make it fair" by forcing a player to become imposter after they have not been selected recently. That would alter the intended randomness.
 
 ---
 
@@ -129,25 +129,25 @@ secretWord: <word>
 hint: null
 ```
 
-Impostor with hints disabled:
+Imposter with hints disabled:
 
 ```text
-role: impostor
+role: imposter
 secretWord: null
 hint: null
 ```
 
-Impostor with hints enabled:
+Imposter with hints enabled:
 
 ```text
-role: impostor
+role: imposter
 secretWord: null
 hint: <hint>
 ```
 
 The UI should render only the appropriate fields for the player's role.
 
-Do not represent an impostor as a normal player whose word is hidden only by a UI conditional. The domain payload itself should express the difference.
+Do not represent an imposter as a normal player whose word is hidden only by a UI conditional. The domain payload itself should express the difference.
 
 ---
 
@@ -155,9 +155,9 @@ Do not represent an impostor as a normal player whose word is hidden only by a U
 
 Choose one player uniformly at random from the full player list.
 
-The starting player may also be an impostor.
+The starting player may also be an imposter.
 
-Do not exclude impostors unless a future rule explicitly requires it.
+Do not exclude imposters unless a future rule explicitly requires it.
 
 Once chosen, the starting player remains fixed for the round.
 
@@ -169,7 +169,7 @@ The app should create a randomized order containing every player exactly once.
 
 This order is independent of:
 
-- impostor selection;
+- imposter selection;
 - starting player selection.
 
 The starting player does not need to be first in the reveal order.
@@ -201,19 +201,19 @@ A valid generated round must satisfy:
 ```text
 players.length >= 3
 players.length <= 20
-impostors.length == impostorCount
-impostors contains no duplicate ids
+imposters.length == imposterCount
+imposters contains no duplicate ids
 startingPlayerId exists in players
 phoneOrder contains every player id exactly once
 secretWord is non-empty
 normal players all map to the same secret word
-impostors have secretWord == null in their reveal payload
+imposters have secretWord == null in their reveal payload
 ```
 
 With hints enabled:
 
 ```text
-every impostor has a valid, non-empty hint
+every imposter has a valid, non-empty hint
 hint != secretWord
 ```
 
@@ -224,7 +224,7 @@ hint != secretWord
 At the beginning of a new round:
 
 - previous reveal state is discarded;
-- previous impostor selection is discarded;
+- previous imposter selection is discarded;
 - previous starting-player UI state is discarded;
 - previous secret display state is discarded;
 - a fresh round is generated.

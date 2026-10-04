@@ -1,4 +1,4 @@
-# Privacy & Secret-Handling Specification — Impostor
+# Privacy & Secret-Handling Specification — Imposter
 
 ## 1. Privacy principle
 
@@ -13,8 +13,8 @@ Treat game secrets as transient sensitive data.
 The following are secrets during a live round:
 
 - secret word;
-- impostor role;
-- impostor hint;
+- imposter role;
+- imposter hint;
 - mapping between player and role;
 - any state from which the secret can be inferred.
 
@@ -59,8 +59,8 @@ Never log:
 
 ```text
 secret word
-impostor names
-impostor IDs
+imposter names
+imposter IDs
 hints
 full round state
 reveal payload
@@ -69,7 +69,7 @@ reveal payload
 Bad:
 
 ```text
-debugPrint("Impostor: $player");
+debugPrint("Imposter: $player");
 ```
 
 Good:

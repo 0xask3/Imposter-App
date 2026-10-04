@@ -1,4 +1,4 @@
-# Test Plan — Impostor
+# Test Plan — Imposter
 
 ## 1. Test pyramid
 
@@ -25,12 +25,12 @@ Test:
 - names trimmed;
 - duplicate names handled according to product rule.
 
-### Impostor assignment
+### Imposter assignment
 
 For valid inputs:
 
-- exact impostor count;
-- unique impostor IDs;
+- exact imposter count;
+- unique imposter IDs;
 - every selected player exists;
 - no hidden duplicate;
 - no UI dependency.
@@ -43,7 +43,7 @@ Verify:
 
 - exactly one selected;
 - selected player exists;
-- impostor status does not exclude them;
+- imposter status does not exclude them;
 - result remains stable after repeated reads of the same round.
 
 ### Reveal payload
@@ -58,18 +58,18 @@ secretWord != null
 hint == null
 ```
 
-Impostor, hints off:
+Imposter, hints off:
 
 ```text
-role == impostor
+role == imposter
 secretWord == null
 hint == null
 ```
 
-Impostor, hints on:
+Imposter, hints on:
 
 ```text
-role == impostor
+role == imposter
 secretWord == null
 hint != null
 hint != secretWord
@@ -106,12 +106,12 @@ for each valid configuration:
     round = createRound(configuration)
 
     assert player count valid
-    assert impostor count exact
-    assert impostors unique
+    assert imposter count exact
+    assert imposters unique
     assert starting player valid
     assert phone order is a permutation
     assert every normal has same secret
-    assert every impostor has no secret
+    assert every imposter has no secret
 ```
 
 ---
@@ -130,7 +130,7 @@ Cover:
 
 ### Settings
 
-- adjust impostor count;
+- adjust imposter count;
 - select categories;
 - change difficulty;
 - toggle hints;
@@ -147,7 +147,7 @@ Cover:
 ### Results
 
 - manual-vote instruction present;
-- impostors remain hidden until reveal action;
+- imposters remain hidden until reveal action;
 - Play Again retains setup.
 
 ---
@@ -217,8 +217,8 @@ players_5
 players_10
 players_20
 
-one_impostor
-two_impostors
+one_imposter
+two_imposters
 
 hints_on
 hints_off

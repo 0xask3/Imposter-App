@@ -1,4 +1,4 @@
-enum PlayerRole { normal, impostor }
+enum PlayerRole { normal, imposter }
 
 final class RevealPayload {
   const RevealPayload({

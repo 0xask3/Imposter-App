@@ -27,7 +27,6 @@ final class GameValidator {
     }
 
     final seenIds = <String>{};
-    final seenNames = <String>{};
     for (final player in players) {
       if (player.id.isEmpty) {
         issues.add(
@@ -45,39 +44,21 @@ final class GameValidator {
         );
       }
 
-      if (player.name.isEmpty) {
-        issues.add(
-          const GameIssue(
-            GameIssueCode.emptyPlayerName,
-            'Enter a name for every player.',
-          ),
-        );
-      } else if (player.name.length > maxPlayerNameLength) {
-        issues.add(
-          GameIssue(
-            GameIssueCode.playerNameTooLong,
-            'Player names must be $maxPlayerNameLength characters or fewer.',
-          ),
-        );
-      }
-
-      final normalizedName = player.name.toLowerCase();
-      if (normalizedName.isNotEmpty && !seenNames.add(normalizedName)) {
-        issues.add(
-          const GameIssue(
-            GameIssueCode.duplicatePlayerName,
-            'Player names must be unique. Rename one of the duplicate players.',
-          ),
-        );
-      }
+      issues.addAll(
+        validatePlayerName(
+          player.name,
+          existingPlayers: players,
+          excludingPlayerId: player.id,
+        ),
+      );
     }
 
-    if (settings.impostorCount < 1 ||
-        settings.impostorCount >= players.length) {
+    if (settings.imposterCount < 1 ||
+        settings.imposterCount >= players.length) {
       issues.add(
         const GameIssue(
-          GameIssueCode.invalidImpostorCount,
-          'Choose at least one impostor and fewer impostors than players.',
+          GameIssueCode.invalidImposterCount,
+          'Choose at least one imposter and fewer imposters than players.',
         ),
       );
     }
@@ -102,5 +83,42 @@ final class GameValidator {
     }
 
     return List.unmodifiable(issues);
+  }
+
+  static List<GameIssue> validatePlayerName(
+    String name, {
+    required List<Player> existingPlayers,
+    String? excludingPlayerId,
+  }) {
+    final normalizedName = name.trim().toLowerCase();
+    if (normalizedName.isEmpty) {
+      return const [
+        GameIssue(
+          GameIssueCode.emptyPlayerName,
+          'Enter a name for this player.',
+        ),
+      ];
+    }
+    if (normalizedName.length > maxPlayerNameLength) {
+      return const [
+        GameIssue(
+          GameIssueCode.playerNameTooLong,
+          'Player names must be 24 characters or fewer.',
+        ),
+      ];
+    }
+    if (existingPlayers.any(
+      (player) =>
+          player.id != excludingPlayerId &&
+          player.name.toLowerCase() == normalizedName,
+    )) {
+      return const [
+        GameIssue(
+          GameIssueCode.duplicatePlayerName,
+          'Player names must be unique. Rename one of the duplicate players.',
+        ),
+      ];
+    }
+    return const [];
   }
 }

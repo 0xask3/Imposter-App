@@ -1,4 +1,4 @@
-# Content Specification — Impostor
+# Content Specification — Imposter
 
 ## 1. Content goals
 
@@ -7,7 +7,7 @@ Words are part of the game design, not filler.
 Good entries create conversations where:
 
 - normal players can give clues without naming the word;
-- the impostor can infer the topic from the discussion;
+- the imposter can infer the topic from the discussion;
 - the word is recognizable enough for the target audience;
 - the word is not so obvious that the game becomes trivial.
 
@@ -94,7 +94,7 @@ Hints should be:
 - concise;
 - not synonyms of the exact word;
 - not an exact category label when that makes the word trivial, unless intentional;
-- useful enough that an impostor can participate.
+- useful enough that an imposter can participate.
 
 Good:
 

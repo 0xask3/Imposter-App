@@ -5,7 +5,7 @@ enum GameIssueCode {
   emptyPlayerName,
   playerNameTooLong,
   duplicatePlayerName,
-  invalidImpostorCount,
+  invalidImposterCount,
   emptyCategoryId,
   emptyCategoryName,
   duplicateCategoryId,

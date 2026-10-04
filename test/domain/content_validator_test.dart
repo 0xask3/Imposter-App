@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:impostor/domain/models/category.dart';
-import 'package:impostor/domain/models/game_issue.dart';
-import 'package:impostor/domain/models/word_entry.dart';
-import 'package:impostor/domain/models/difficulty.dart';
-import 'package:impostor/domain/services/content_validator.dart';
+import 'package:imposter/domain/models/category.dart';
+import 'package:imposter/domain/models/game_issue.dart';
+import 'package:imposter/domain/models/word_entry.dart';
+import 'package:imposter/domain/models/difficulty.dart';
+import 'package:imposter/domain/services/content_validator.dart';
 
 void main() {
   const categories = [Category(id: 'animals', name: 'Animals')];

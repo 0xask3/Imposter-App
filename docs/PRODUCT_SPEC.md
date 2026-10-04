@@ -1,14 +1,14 @@
-# Product Specification — Impostor
+# Product Specification — Imposter
 
 ## 1. Product summary
 
-Impostor is a free, simple, offline-first mobile party game designed for groups sharing one phone.
+Imposter is a free, simple, offline-first mobile party game designed for groups sharing one phone.
 
-The app replaces the administrative work of classic "impostor" party games:
+The app replaces the administrative work of classic "imposter" party games:
 
 - maintaining players;
 - selecting a word;
-- choosing impostors;
+- choosing imposters;
 - privately distributing roles;
 - choosing a random starting player;
 - revealing the result after the discussion.
@@ -46,12 +46,12 @@ A returning group should spend more time playing than configuring.
 - Home screen
 - Add/remove/edit players
 - 3–20 players
-- Configurable impostor count
+- Configurable imposter count
 - Built-in categories
 - Multiple category selection
 - Difficulty selection
-- Optional impostor hint mode
-- Random impostors
+- Optional imposter hint mode
+- Random imposters
 - Random starting player
 - Randomized phone-pass order
 - Private reveal flow
@@ -117,23 +117,23 @@ The reveal/pass order should be randomized separately unless a specific setting 
 
 ## 5. Game settings
 
-### Impostor count
+### Imposter count
 
 The user selects an integer.
 
 Validity:
 
 ```text
-impostorCount >= 1
-impostorCount < playerCount
+imposterCount >= 1
+imposterCount < playerCount
 ```
 
 The UI should provide a sensible default.
 
 Suggested initial default:
 
-- 1 impostor for 3–7 players
-- 2 impostors for 8+ players
+- 1 imposter for 3–7 players
+- 2 imposters for 8+ players
 
 This is a default only; the player can change it.
 
@@ -154,16 +154,16 @@ Initial values:
 - Hard
 - Any
 
-Difficulty affects word selection, not player skill or impostor count.
+Difficulty affects word selection, not player skill or imposter count.
 
 ### Hint mode
 
 Two modes:
 
-- Off — impostor sees only their impostor role.
-- On — impostor receives a related hint.
+- Off — imposter sees only their imposter role.
+- On — imposter receives a related hint.
 
-The secret word itself must never be displayed to an impostor.
+The secret word itself must never be displayed to an imposter.
 
 ---
 
@@ -187,7 +187,7 @@ At round creation:
 
 1. Validate settings.
 2. Select a usable word.
-3. Select unique impostors.
+3. Select unique imposters.
 4. Select starting player.
 5. Create a phone-pass order.
 6. Generate the round state.
@@ -228,7 +228,7 @@ The app may show:
 
 Show:
 
-- impostor name(s);
+- imposter name(s);
 - secret word;
 - optional hint;
 - optionally, starting player.
@@ -244,7 +244,7 @@ The result screen must not expose more information than intended.
 - retain the current player list;
 - retain current game settings;
 - generate a fresh word;
-- generate fresh impostors;
+- generate fresh imposters;
 - generate a fresh starting player;
 - generate a fresh phone-pass order;
 - reset all reveal UI state.

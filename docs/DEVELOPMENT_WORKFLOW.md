@@ -1,4 +1,4 @@
-# Development Workflow — Impostor
+# Development Workflow — Imposter
 
 ## 1. First Codex session
 
@@ -86,17 +86,17 @@ Do not fabricate successful results. Report exact failures.
 After a playable build exists:
 
 1. Add 4–6 players.
-2. Configure 1 impostor.
+2. Configure 1 imposter.
 3. Enable hints.
 4. Start a round.
 5. Pass phone through every player.
 6. Verify normal players see the same word.
-7. Verify impostor sees only hint/role.
+7. Verify imposter sees only hint/role.
 8. Verify the starting player is announced.
 9. Manually "vote".
 10. Reveal result.
 11. Play Again.
-12. Repeat with 2 impostors.
+12. Repeat with 2 imposters.
 13. Repeat with hints off.
 14. Repeat in airplane mode.
 15. Background the app during reveal and verify privacy behavior.
