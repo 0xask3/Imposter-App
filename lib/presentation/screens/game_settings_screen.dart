@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../application/setup_controller.dart';
 import '../../domain/models/difficulty.dart';
 import '../../domain/services/round_generation_result.dart';
+import '../app_routes.dart';
 
 final class GameSettingsScreen extends StatefulWidget {
   const GameSettingsScreen({super.key, required this.controller});
@@ -23,23 +26,7 @@ final class _GameSettingsScreenState extends State<GameSettingsScreen> {
     setState(() => _starting = false);
     switch (result) {
       case RoundCreated():
-        await showDialog<void>(
-          context: context,
-          builder: (context) => AlertDialog(
-            key: const Key('round-ready-dialog'),
-            icon: const Icon(Icons.check_circle_outline),
-            title: const Text('Round ready'),
-            content: const Text(
-              'Your setup is ready. The private pass-the-phone reveal flow is coming next.',
-            ),
-            actions: [
-              FilledButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Got it'),
-              ),
-            ],
-          ),
-        );
+        unawaited(Navigator.pushNamed<void>(context, AppRoutes.reveal));
       case RoundRejected(:final issues):
         await showDialog<void>(
           context: context,

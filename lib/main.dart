@@ -5,6 +5,7 @@ import 'presentation/app_routes.dart';
 import 'presentation/screens/game_settings_screen.dart';
 import 'presentation/screens/home_screen.dart';
 import 'presentation/screens/player_setup_screen.dart';
+import 'presentation/screens/reveal_flow_screen.dart';
 
 void main() {
   runApp(ImposterApp(controller: SetupController()));
@@ -42,6 +43,7 @@ final class ImposterApp extends StatelessWidget {
         AppRoutes.home: (_) => HomeScreen(controller: controller),
         AppRoutes.players: (_) => PlayerSetupScreen(controller: controller),
         AppRoutes.settings: (_) => GameSettingsScreen(controller: controller),
+        AppRoutes.reveal: (_) => RevealFlowScreen(controller: controller),
       },
     );
   }

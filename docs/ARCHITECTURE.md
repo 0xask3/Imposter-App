@@ -204,6 +204,14 @@ Result → Revealing     invalid unless a new round is created
 
 ---
 
+For the private reveal flow, `SetupController` owns the randomized phone-order
+cursor, identity confirmation, and whether the current payload may be rendered.
+The presentation layer receives no payload before the reveal action; Hide & Pass
+clears visibility before advancing the cursor. The reveal route blocks system
+back navigation and returns to confirmation after an app lifecycle interruption.
+On Android, its native activity also enables `FLAG_SECURE` while that route is
+mounted so the OS cannot capture the reveal in screenshots or task previews.
+
 ## 8. Persistence
 
 Persist only what is useful across launches:

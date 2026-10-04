@@ -33,6 +33,10 @@ final class SetupController extends ChangeNotifier {
   DifficultyFilter _difficulty = DifficultyFilter.any;
   bool _hintsEnabled = false;
   Round? _currentRound;
+  int _revealIndex = 0;
+  bool _identityConfirmed = false;
+  bool _payloadVisible = false;
+  bool _revealComplete = false;
 
   List<Player> get players => List.unmodifiable(_players);
   List<Category> get categories => builtinCategories;
@@ -40,6 +44,22 @@ final class SetupController extends ChangeNotifier {
   DifficultyFilter get difficulty => _difficulty;
   bool get hintsEnabled => _hintsEnabled;
   Round? get currentRound => _currentRound;
+  bool get identityConfirmed => _identityConfirmed;
+  bool get payloadVisible => _payloadVisible;
+  bool get revealComplete => _revealComplete;
+  Player? get currentRevealPlayer {
+    final round = _currentRound;
+    if (round == null ||
+        _revealComplete ||
+        _revealIndex >= round.phoneOrder.length) {
+      return null;
+    }
+    final playerId = round.phoneOrder[_revealIndex];
+    for (final player in round.players) {
+      if (player.id == playerId) return player;
+    }
+    return null;
+  }
 
   int get imposterCount {
     final maximum = (_players.length - 1).clamp(1, 19);
@@ -138,8 +158,66 @@ final class SetupController extends ChangeNotifier {
       RoundCreated(:final round) => round,
       RoundRejected() => null,
     };
+    _resetRevealFlow();
     notifyListeners();
     return result;
+  }
+
+  void confirmCurrentPlayer() {
+    if (_currentRound == null ||
+        _revealComplete ||
+        currentRevealPlayer == null) {
+      return;
+    }
+    _identityConfirmed = true;
+    _payloadVisible = false;
+    notifyListeners();
+  }
+
+  void revealCurrentPayload() {
+    if (_currentRound == null ||
+        _revealComplete ||
+        !_identityConfirmed ||
+        currentRevealPlayer == null) {
+      return;
+    }
+    _payloadVisible = true;
+    notifyListeners();
+  }
+
+  void hideAndAdvance() {
+    final round = _currentRound;
+    if (round == null || _revealComplete || !_payloadVisible) return;
+
+    _payloadVisible = false;
+    _identityConfirmed = false;
+    if (_revealIndex == round.phoneOrder.length - 1) {
+      _revealComplete = true;
+    } else {
+      _revealIndex++;
+    }
+    notifyListeners();
+  }
+
+  void handleRevealInterruption() {
+    if (_currentRound == null || _revealComplete) return;
+    if (!_identityConfirmed && !_payloadVisible) return;
+    _payloadVisible = false;
+    _identityConfirmed = false;
+    notifyListeners();
+  }
+
+  void clearCurrentRound() {
+    _currentRound = null;
+    _resetRevealFlow();
+    notifyListeners();
+  }
+
+  void _resetRevealFlow() {
+    _revealIndex = 0;
+    _identityConfirmed = false;
+    _payloadVisible = false;
+    _revealComplete = false;
   }
 
   void startNewGame() {
@@ -151,6 +229,7 @@ final class SetupController extends ChangeNotifier {
     _difficulty = DifficultyFilter.any;
     _hintsEnabled = false;
     _currentRound = null;
+    _resetRevealFlow();
     notifyListeners();
   }
 }

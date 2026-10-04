@@ -89,6 +89,9 @@ Acceptance:
 
 - every player sees only their own payload in normal tested usage.
 
+Android privacy handling: the reveal route blocks screenshot/task-switcher
+capture while active and returns to player confirmation after an interruption.
+
 ---
 
 ## Phase 4 — Starting player and results

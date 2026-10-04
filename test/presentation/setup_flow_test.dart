@@ -41,11 +41,26 @@ void main() {
     await tester.tap(startButton);
     await tester.pumpAndSettle();
     expect(controller.currentRound, isNotNull);
-    expect(find.byKey(const Key('round-ready-dialog')), findsOneWidget);
+    expect(find.text('PASS THE PHONE'), findsOneWidget);
     expect(find.text(controller.currentRound!.secretWord), findsNothing);
     for (final imposterId in controller.currentRound!.imposterIds) {
       expect(find.text(imposterId), findsNothing);
     }
+
+    final firstPlayer = controller.currentRevealPlayer!;
+    await tester.tap(find.byKey(const Key('confirm-player-button')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('reveal-information-button')), findsOneWidget);
+    expect(find.text(controller.currentRound!.secretWord), findsNothing);
+
+    await tester.tap(find.byKey(const Key('reveal-information-button')));
+    await tester.pumpAndSettle();
+    expect(find.text(controller.currentRound!.secretWord), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('hide-and-pass-button')));
+    await tester.pumpAndSettle();
+    expect(find.text(controller.currentRound!.secretWord), findsNothing);
+    expect(controller.currentRevealPlayer!.id, isNot(firstPlayer.id));
   });
 
   testWidgets('duplicate player names show an actionable validation message', (
