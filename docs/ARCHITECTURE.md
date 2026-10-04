@@ -155,7 +155,9 @@ abstract interface class RandomSource {
 
 Tests can inject a seeded/fake implementation.
 
-For production, use an appropriate source of randomness and document the choice.
+For production, `SystemRandomSource` wraps `dart:math`'s `Random.secure()`.
+The game engine receives it through `RandomSource`; it does not call global
+randomness directly. Tests inject a deterministic implementation.
 
 Do not tie the engine to `dart:math.Random` in ways that make tests nondeterministic or difficult to reproduce.
 
@@ -248,6 +250,11 @@ abstract interface class WordHistoryRepository {}
 ```
 
 This allows the implementation to start with a simple local store and change later without rewriting the game domain.
+
+The round generator requests the most recent 20 word IDs by default. The window
+is configurable in code. Android history is persisted as a short list of word
+IDs with Flutter's `shared_preferences` plugin; an in-memory implementation is
+used for deterministic tests. Active round assignments are not persisted.
 
 ---
 

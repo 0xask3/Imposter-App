@@ -12,9 +12,7 @@ class ImpostorApp extends StatelessWidget {
     return MaterialApp(
       title: 'Impostor',
       theme: ThemeData.dark(useMaterial3: true),
-      home: const Scaffold(
-        body: Center(child: Text('Impostor')),
-      ),
+      home: const Scaffold(body: Center(child: Text('Impostor'))),
     );
   }
 }
