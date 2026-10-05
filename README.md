@@ -52,9 +52,9 @@ If only one device is connected, you can use `flutter run` without `-d <device-i
 
 In VS Code, open the cloned `Imposter-App` folder, select an Android device from the device picker, then press **F5** or choose **Run > Start Debugging**.
 
-## Build an APK
+## Build a debug APK
 
-Create a debug APK:
+Create an APK for local testing:
 
 ```sh
 flutter build apk --debug
@@ -66,7 +66,39 @@ The APK is written to:
 build/app/outputs/flutter-apk/app-debug.apk
 ```
 
-The project currently uses the debug signing key for Android release builds. Configure a private release keystore before distributing a release APK or publishing to an app store.
+## Publish a production APK on GitHub
+
+Pushing a version tag such as `v1.0.0` starts the Android release workflow. It builds a signed production APK and publishes it as an asset on a GitHub Release. The APK version name comes from the tag; the build number comes from the Actions run number. Release builds require the signing key configured below.
+
+Configure signing once before creating the first release:
+
+1. Generate a private Android upload keystore. Keep it somewhere safe and do not commit it:
+
+   ```sh
+   keytool -genkey -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias imposter-upload
+   ```
+
+2. Convert it to Base64. In PowerShell, run this from the directory containing the keystore and copy the output:
+
+   ```powershell
+   [Convert]::ToBase64String([IO.File]::ReadAllBytes("upload-keystore.jks")) | Set-Clipboard
+   ```
+
+3. In GitHub, open **Settings > Secrets and variables > Actions** and add these repository secrets:
+
+   - `ANDROID_KEYSTORE_BASE64`: the copied Base64 value
+   - `ANDROID_KEYSTORE_PASSWORD`: the keystore password
+   - `ANDROID_KEY_ALIAS`: `imposter-upload` (or the alias you chose)
+   - `ANDROID_KEY_PASSWORD`: the key password
+
+Create and push a version tag to publish:
+
+```sh
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The workflow attaches `Imposter-v1.0.0.apk` to the release. Keep using the same keystore for future updates so Android can install them over the existing app.
 
 ## Play the game
 
