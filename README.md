@@ -88,7 +88,7 @@ Configure signing once before creating the first release:
 
    - `ANDROID_KEYSTORE_BASE64`: the copied Base64 value
    - `ANDROID_KEYSTORE_PASSWORD`: the keystore password
-   - `ANDROID_KEY_ALIAS`: `imposter-upload` (or the alias you chose)
+   - `ANDROID_KEY_ALIAS`: the exact alias passed to `keytool` (the example uses `imposter-upload`; check with `keytool -list -keystore upload-keystore.jks`)
    - `ANDROID_KEY_PASSWORD`: the key password
 
 Create and push a version tag to publish:
