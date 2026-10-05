@@ -44,7 +44,6 @@ final class SetupController extends ChangeNotifier {
   DifficultyFilter get difficulty => _difficulty;
   bool get hintsEnabled => _hintsEnabled;
   Round? get currentRound => _currentRound;
-  bool get identityConfirmed => _identityConfirmed;
   bool get payloadVisible => _payloadVisible;
   bool get revealComplete => _revealComplete;
   Player? get startingPlayer {
@@ -118,31 +117,6 @@ final class SetupController extends ChangeNotifier {
     if (playerIndex == -1) return;
     _players[playerIndex] = Player(id: id, name: name);
     notifyListeners();
-  }
-
-  GameIssue? savePlayer({String? id, required String name}) {
-    final validationIssues = GameValidator.validatePlayerName(
-      name,
-      existingPlayers: _players,
-      excludingPlayerId: id,
-    );
-    if (validationIssues.isNotEmpty) return validationIssues.first;
-
-    if (id == null) {
-      if (_players.length >= GameValidator.maxPlayers) {
-        return const GameIssue(
-          GameIssueCode.playerCountOutOfRange,
-          'A game can have at most 20 players.',
-        );
-      }
-      _players.add(Player(id: 'player-${_nextPlayerId++}', name: name));
-    } else {
-      final playerIndex = _players.indexWhere((player) => player.id == id);
-      if (playerIndex == -1) return null;
-      _players[playerIndex] = Player(id: id, name: name);
-    }
-    notifyListeners();
-    return null;
   }
 
   void removePlayer(String id) {

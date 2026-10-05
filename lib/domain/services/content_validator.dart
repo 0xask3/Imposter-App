@@ -119,7 +119,5 @@ final class ContentValidator {
     return List.unmodifiable(issues);
   }
 
-  static String normalizeText(String value) => _normalize(value);
-
   static String _normalize(String value) => value.trim().toLowerCase();
 }

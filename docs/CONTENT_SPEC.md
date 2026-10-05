@@ -42,7 +42,7 @@ Categories can be renamed/reordered without changing game logic.
 
 The built-in starter catalog currently includes Animals, Food, Nature,
 Everyday Objects, Drinks, Countries, Cities, Sports, Technology, Vehicles,
-Jobs, and Music. Each currently has nine entries spanning all three difficulty
+Jobs, and Music. Each category has 50 entries spanning all three difficulty
 levels.
 
 ---

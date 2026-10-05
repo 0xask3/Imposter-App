@@ -64,9 +64,10 @@ Acceptance:
 
 - a valid game can be configured entirely through the UI.
 
-Implementation note: Phase 2 uses a small authored seed catalog so category,
-difficulty, and hint settings can be validated against real entries. This is
-only a development-sized seed; the larger initial catalog remains Phase 5.
+Implementation note: Phase 2 began with a small authored seed catalog so
+category, difficulty, and hint settings could be validated against real
+entries. Phase 5 expanded the built-in catalog to 12 categories with 50 words
+per category.
 
 ---
 
