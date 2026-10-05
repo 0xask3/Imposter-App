@@ -104,10 +104,10 @@ The app should prevent or obscure secret information from appearing in:
 - recent-apps/task-switcher previews;
 - automated screenshots during sensitive states;
 
-where platform APIs permit. On Android, the active reveal screen enables
-`FLAG_SECURE` for its lifetime to block screenshots and task-switcher capture;
-the flag is cleared when that screen is left. Other platforms still need their
-own implementation before release.
+where platform APIs permit. On Android, the private reveal and round-results
+screens enable `FLAG_SECURE` for their lifetime to block screenshots and
+task-switcher capture; the flag is cleared when those screens are left. Other
+platforms still need their own implementation before release.
 
 Because platform behavior can vary, test on real supported OS versions.
 
@@ -123,8 +123,10 @@ When the app goes to the background during a sensitive reveal:
 
 On resume, the app must ensure the secret cannot appear unexpectedly to the wrong person.
 
-The current Android reveal flow hides the payload and returns to player
-confirmation whenever the app becomes inactive, paused, hidden, or detached.
+The current Android reveal flow hides the payload and returns to the named
+reveal prompt whenever the app becomes inactive, paused, hidden, or detached.
+The Android results screen also hides the revealed outcome after an interruption
+and requires another explicit reveal action.
 
 A conservative implementation may require re-confirmation before continuing a sensitive reveal.
 

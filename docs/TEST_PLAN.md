@@ -138,11 +138,11 @@ Cover:
 
 ### Reveal
 
-- pass screen shows correct current player;
+- named reveal prompt shows correct current player;
 - secret is hidden before reveal;
 - reveal action shows correct payload;
 - hide action removes secret;
-- next player sees only their own pass screen.
+- next player sees only their named reveal prompt.
 
 ### Results
 

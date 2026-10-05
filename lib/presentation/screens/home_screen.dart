@@ -70,7 +70,7 @@ final class HomeScreen extends StatelessWidget {
                   onPressed: () => showDialog<void>(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text('Settings'),
+                      title: const Text('Privacy & Data'),
                       content: const Text(
                         'Imposter works offline. Recent words are remembered on this device to help reduce repeats.',
                       ),
@@ -82,7 +82,7 @@ final class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  child: const Text('Settings'),
+                  child: const Text('Privacy & Data'),
                 ),
               ],
             ),

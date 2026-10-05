@@ -74,7 +74,8 @@ The app should not try to "make it fair" by forcing a player to become imposter 
 
 ## 5. Secret word selection
 
-Select exactly one word from the effective word pool.
+Select exactly one secret entry from the effective word pool. Its secret text
+may be a single word or a short phrase; its optional hint remains one word.
 
 The effective pool is:
 
@@ -97,6 +98,8 @@ It must never return an invalid/empty word.
 When hints are enabled:
 
 - every word must have an associated hint;
+- each hint contains exactly one word;
+- the selected difficulty applies to the word and its paired hint together;
 - the hint must be relevant enough to be useful;
 - the hint must not equal the word;
 - the hint should not trivially reveal the exact answer.
@@ -105,7 +108,7 @@ Example:
 
 ```text
 Secret word: Pizza
-Hint: Italian food
+Hint: Italian
 ```
 
 Bad:

@@ -17,6 +17,7 @@ enum GameIssueCode {
   duplicateWord,
   wordHasNoCategories,
   emptyHint,
+  multiWordHint,
   hintMatchesWord,
   hintRequired,
   wordHistoryUnavailable,

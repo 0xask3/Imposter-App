@@ -99,6 +99,13 @@ final class ContentValidator {
             'Remove an empty hint or provide a useful hint.',
           ),
         );
+      } else if (hint != null && hint.trim().contains(RegExp(r'\s'))) {
+        issues.add(
+          const GameIssue(
+            GameIssueCode.multiWordHint,
+            'Use a single-word hint.',
+          ),
+        );
       } else if (hint != null && _normalize(hint) == normalizedWord) {
         issues.add(
           const GameIssue(

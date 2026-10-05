@@ -107,6 +107,10 @@ When a user enters `"  Alex  "`, store/display `"Alex"`.
 
 Names should be limited to a sensible length to prevent layout breakage. Suggested initial limit: 24 characters.
 
+Starting another New Game in the current app session keeps the existing player
+names and round settings. The group can edit, add, remove, or reorder players
+during setup.
+
 ### Player ordering
 
 The setup list is a user-managed list.

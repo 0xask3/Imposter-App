@@ -47,6 +47,24 @@ final class SetupController extends ChangeNotifier {
   bool get identityConfirmed => _identityConfirmed;
   bool get payloadVisible => _payloadVisible;
   bool get revealComplete => _revealComplete;
+  Player? get startingPlayer {
+    final round = _currentRound;
+    if (round == null) return null;
+    for (final player in round.players) {
+      if (player.id == round.startingPlayerId) return player;
+    }
+    return null;
+  }
+
+  List<Player> get imposterPlayers {
+    final round = _currentRound;
+    if (round == null) return const [];
+    return List.unmodifiable(
+      round.players.where((player) => round.imposterIds.contains(player.id)),
+    );
+  }
+
+  String? get secretWord => _currentRound?.secretWord;
   Player? get currentRevealPlayer {
     final round = _currentRound;
     if (round == null ||
@@ -68,7 +86,8 @@ final class SetupController extends ChangeNotifier {
 
   bool get canContinue =>
       _players.length >= GameValidator.minPlayers &&
-      _players.length <= GameValidator.maxPlayers;
+      _players.length <= GameValidator.maxPlayers &&
+      _players.every((player) => playerNameIssue(player.id) == null);
 
   GameSettings get gameSettings => GameSettings(
     imposterCount: imposterCount,
@@ -76,6 +95,30 @@ final class SetupController extends ChangeNotifier {
     difficulty: _difficulty,
     hintsEnabled: _hintsEnabled,
   );
+
+  GameIssue? playerNameIssue(String id) {
+    final playerIndex = _players.indexWhere((player) => player.id == id);
+    if (playerIndex == -1) return null;
+    final issues = GameValidator.validatePlayerName(
+      _players[playerIndex].name,
+      existingPlayers: _players,
+      excludingPlayerId: id,
+    );
+    return issues.isEmpty ? null : issues.first;
+  }
+
+  void addPlayerDraft() {
+    if (_players.length >= GameValidator.maxPlayers) return;
+    _players.add(Player(id: 'player-${_nextPlayerId++}', name: ''));
+    notifyListeners();
+  }
+
+  void updatePlayerDraft(String id, String name) {
+    final playerIndex = _players.indexWhere((player) => player.id == id);
+    if (playerIndex == -1) return;
+    _players[playerIndex] = Player(id: id, name: name);
+    notifyListeners();
+  }
 
   GameIssue? savePlayer({String? id, required String name}) {
     final validationIssues = GameValidator.validatePlayerName(
@@ -137,6 +180,11 @@ final class SetupController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearAllCategories() {
+    _selectedCategoryIds.clear();
+    notifyListeners();
+  }
+
   void selectDifficulty(DifficultyFilter difficulty) {
     _difficulty = difficulty;
     notifyListeners();
@@ -154,11 +202,13 @@ final class SetupController extends ChangeNotifier {
       words: builtinWords,
       settings: gameSettings,
     );
-    _currentRound = switch (result) {
-      RoundCreated(:final round) => round,
-      RoundRejected() => null,
-    };
-    _resetRevealFlow();
+    switch (result) {
+      case RoundCreated(:final round):
+        _currentRound = round;
+        _resetRevealFlow();
+      case RoundRejected():
+        if (_currentRound == null) _resetRevealFlow();
+    }
     notifyListeners();
     return result;
   }
@@ -221,15 +271,11 @@ final class SetupController extends ChangeNotifier {
   }
 
   void startNewGame() {
-    _players.clear();
-    _selectedCategoryIds
-      ..clear()
-      ..addAll(builtinCategories.map((category) => category.id));
-    _imposterCount = null;
-    _difficulty = DifficultyFilter.any;
-    _hintsEnabled = false;
     _currentRound = null;
     _resetRevealFlow();
+    while (_players.length < GameValidator.minPlayers) {
+      _players.add(Player(id: 'player-${_nextPlayerId++}', name: ''));
+    }
     notifyListeners();
   }
 }

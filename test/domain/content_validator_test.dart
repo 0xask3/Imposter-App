@@ -15,7 +15,7 @@ void main() {
         WordEntry(
           id: 'penguin',
           word: 'Penguin',
-          hint: 'Cold-climate bird',
+          hint: 'Arctic',
           categoryIds: const {'animals'},
           difficulty: Difficulty.easy,
         ),
@@ -59,5 +59,25 @@ void main() {
     expect(codes, contains(GameIssueCode.unknownCategory));
     expect(codes, contains(GameIssueCode.emptyWord));
     expect(codes, contains(GameIssueCode.wordHasNoCategories));
+  });
+
+  test('rejects hints with more than one word', () {
+    final issues = ContentValidator.validate(
+      categories: categories,
+      words: [
+        WordEntry(
+          id: 'penguin',
+          word: 'Penguin',
+          hint: 'Cold climate',
+          categoryIds: const {'animals'},
+          difficulty: Difficulty.easy,
+        ),
+      ],
+    );
+
+    expect(
+      issues.map((issue) => issue.code),
+      contains(GameIssueCode.multiWordHint),
+    );
   });
 }

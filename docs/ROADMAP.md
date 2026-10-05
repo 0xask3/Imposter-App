@@ -78,8 +78,7 @@ Implement the core pass-the-phone experience.
 
 Deliverables:
 
-- pass screen;
-- identity confirmation;
+- named reveal prompt;
 - reveal;
 - hide/pass;
 - next-player transition;
@@ -112,6 +111,13 @@ Deliverables:
 Acceptance:
 
 - group can complete repeated rounds without resetting the app.
+
+Implementation note: the generated starting player is shown after a separate
+reveal action, discussion asks the group to vote manually, and results appear
+when the group selects Reveal Result. Play Again preserves the setup and
+generates a fresh round; New Game keeps the player list and returns to setup.
+On Android, results are hidden again after app interruption and protected from
+screenshots/task previews.
 
 ---
 

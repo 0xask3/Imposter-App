@@ -40,6 +40,11 @@ Recommended initial categories:
 
 Categories can be renamed/reordered without changing game logic.
 
+The built-in starter catalog currently includes Animals, Food, Nature,
+Everyday Objects, Drinks, Countries, Cities, Sports, Technology, Vehicles,
+Jobs, and Music. Each currently has nine entries spanning all three difficulty
+levels.
+
 ---
 
 ## 3. Entry schema
@@ -54,13 +59,16 @@ categoryIds
 difficulty
 ```
 
+Secret words may be a single word or a short multiword phrase. Hints remain
+single-word clues.
+
 Example:
 
 ```json
 {
   "id": "animal_penguin",
   "word": "Penguin",
-  "hint": "Cold-climate bird",
+  "hint": "Arctic",
   "categoryIds": ["animals"],
   "difficulty": "easy"
 }
@@ -83,12 +91,15 @@ Recognizable but allows more varied discussion.
 Less obvious, more specific, or culturally narrower, while still being playable.
 
 Difficulty should be judged for the intended language/audience, not only by dictionary rarity.
+The entry's difficulty applies to its word and paired one-word hint. Selecting
+Easy, Medium, or Hard includes only entries tagged at that same difficulty; Any
+may select entries from all three levels.
 
 ---
 
 ## 5. Hint design
 
-Hints should be:
+Hints must contain exactly one word and should be:
 
 - related;
 - concise;
@@ -100,14 +111,14 @@ Good:
 
 ```text
 Word: Penguin
-Hint: Cold-climate bird
+Hint: Arctic
 ```
 
 Potentially too revealing:
 
 ```text
 Word: Penguin
-Hint: A black-and-white Antarctic bird
+Hint: Penguin
 ```
 
 The quality bar should improve over time through content review.

@@ -19,17 +19,22 @@ void main() {
 
     await tester.tap(find.byKey(const Key('new-game-button')));
     await tester.pumpAndSettle();
-    expect(find.text('Add at least 3 players to continue.'), findsOneWidget);
+    expect(find.text('Enter a unique name for each player'), findsOneWidget);
 
-    for (final name in ['Alex', 'Sam', 'Taylor']) {
-      await tester.tap(find.byKey(const Key('add-player-button')));
-      await tester.pumpAndSettle();
-      await tester.enterText(find.byKey(const Key('player-name-field')), name);
-      await tester.tap(find.text('Save'));
-      await tester.pumpAndSettle();
+    for (var index = 0; index < 3; index++) {
+      await tester.enterText(
+        find.byKey(Key('player-name-field-player-${index + 1}')),
+        ['Alex', 'Sam', 'Taylor'][index],
+      );
     }
 
-    expect(find.text('Alex'), findsOneWidget);
+    expect(controller.canContinue, isTrue);
+    controller.startNewGame();
+    expect(controller.players.map((player) => player.name), [
+      'Alex',
+      'Sam',
+      'Taylor',
+    ]);
     await tester.tap(find.byKey(const Key('continue-to-settings-button')));
     await tester.pumpAndSettle();
     expect(find.text('Game Settings'), findsOneWidget);
@@ -41,26 +46,30 @@ void main() {
     await tester.tap(startButton);
     await tester.pumpAndSettle();
     expect(controller.currentRound, isNotNull);
-    expect(find.text('PASS THE PHONE'), findsOneWidget);
-    expect(find.text(controller.currentRound!.secretWord), findsNothing);
+    expect(find.byKey(const Key('slide-to-reveal-cover')), findsOneWidget);
+    expect(controller.payloadVisible, isFalse);
+    expect(find.byKey(const Key('confirm-player-button')), findsNothing);
     for (final imposterId in controller.currentRound!.imposterIds) {
       expect(find.text(imposterId), findsNothing);
     }
 
     final firstPlayer = controller.currentRevealPlayer!;
-    await tester.tap(find.byKey(const Key('confirm-player-button')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('reveal-information-button')), findsOneWidget);
-    expect(find.text(controller.currentRound!.secretWord), findsNothing);
+    expect(find.text(firstPlayer.name.toUpperCase()), findsOneWidget);
+    expect(find.text('SLIDE UP TO REVEAL'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('reveal-information-button')));
+    await tester.drag(
+      find.byKey(const Key('slide-to-reveal-cover')),
+      const Offset(0, -140),
+    );
     await tester.pumpAndSettle();
+    expect(controller.payloadVisible, isTrue);
     expect(find.text(controller.currentRound!.secretWord), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('hide-and-pass-button')));
     await tester.pumpAndSettle();
     expect(find.text(controller.currentRound!.secretWord), findsNothing);
     expect(controller.currentRevealPlayer!.id, isNot(firstPlayer.id));
+    expect(find.byKey(const Key('slide-to-reveal-cover')), findsOneWidget);
   });
 
   testWidgets('duplicate player names show an actionable validation message', (
@@ -74,28 +83,23 @@ void main() {
     await tester.tap(find.byKey(const Key('new-game-button')));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(const Key('add-player-button')));
-    await tester.pumpAndSettle();
-    await tester.enterText(find.byKey(const Key('player-name-field')), 'Alex');
-    await tester.tap(find.text('Save'));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byKey(const Key('add-player-button')));
-    await tester.pumpAndSettle();
     await tester.enterText(
-      find.byKey(const Key('player-name-field')),
+      find.byKey(const Key('player-name-field-player-1')),
+      'Alex',
+    );
+    await tester.enterText(
+      find.byKey(const Key('player-name-field-player-2')),
       ' alex ',
     );
-    await tester.tap(find.text('Save'));
-    await tester.pumpAndSettle();
 
     expect(
       find.text(
         'Player names must be unique. Rename one of the duplicate players.',
       ),
-      findsOneWidget,
+      findsNWidgets(2),
     );
-    expect(controller.players, hasLength(1));
+    expect(controller.players, hasLength(3));
+    expect(controller.canContinue, isFalse);
   });
 }
 

@@ -56,10 +56,11 @@ Secondary:
 
 ```text
 [ How to Play ]
-[ Settings ]
+[ Privacy & Data ]
 ```
 
-The home screen must not require account creation.
+The home screen must not require account creation. Privacy & Data explains
+offline use and local word-history storage.
 
 ---
 
@@ -71,13 +72,17 @@ The home screen must not require account creation.
 Players
 ```
 
-### List item
+### Player entry row
 
 ```text
-Alex                         Edit / Remove
-Sarah                        Edit / Remove
-John                         Edit / Remove
+1  [Player 1's name]                              [Remove]
+2  [Player 2's name]                              [Remove]
+3  [Player 3's name]                              [Remove]
 ```
+
+Names are typed directly into the rows. Add Player appends an empty row. Rows
+can be reordered, and existing names remain when starting another New Game
+during the same app session.
 
 ### Primary control
 
@@ -91,13 +96,9 @@ John                         Edit / Remove
 Continue
 ```
 
-Disable Continue until at least 3 valid players exist.
+Disable Continue until at least 3 players have unique, non-empty valid names.
 
-### Add/edit behavior
-
-Use a simple modal/sheet rather than a full screen when that produces a faster interaction.
-
-Validate on submit.
+Validate names inline as players type.
 
 ---
 
@@ -123,36 +124,30 @@ Do not allow Start Game to produce an unplayable round.
 
 ---
 
-## 6. Pass screen
+## 6. Named reveal screen
 
-This screen protects the previous player's information.
+This screen identifies the next player and places their assignment beneath a
+covering card. The player slides the card upward to reveal the assignment; the
+separate "I'm [name]" and Reveal buttons are omitted.
 
 Example:
 
 ```text
-PASS THE PHONE
+            ALEX
 
-Give the phone to
-
-ALEX
-
-Make sure nobody else
-can see the screen.
-
-[ I'm Alex ]
+     [ SLIDE UP TO REVEAL ]
 ```
 
-The player name must be large and unmistakable.
+The player name must be clear before and during reveal.
 
 Do not reveal role or word on this screen.
 
 ---
 
-## 7. Identity confirmation
+## 7. Deliberate reveal
 
-The player should acknowledge that they are the intended player before seeing any secret.
-
-If the product later removes the button for speed, it must preserve an equivalent deliberate reveal step.
+The next player's name appears with their covered assignment. Sliding the cover
+up reveals the information after the phone has been passed to them.
 
 ---
 
@@ -163,11 +158,9 @@ If the product later removes the button for speed, it must preserve an equivalen
 Before reveal:
 
 ```text
-ALEX
+YOUR ASSIGNMENT
 
-Your information is ready.
-
-[ Reveal ]
+     [ SLIDE UP TO REVEAL ]
 ```
 
 After reveal:
@@ -192,7 +185,7 @@ After reveal:
 YOU ARE THE IMPOSTER
 
 Hint:
-ITALIAN FOOD
+ITALIAN
 
 Remember your hint.
 
@@ -219,7 +212,7 @@ Pressing Hide & Pass must:
 
 1. remove the secret/reveal content from the active widget tree;
 2. advance to a safe state;
-3. prepare the next player's pass screen;
+3. prepare the next player's named reveal prompt;
 4. not briefly flash the previous secret during transition.
 
 Avoid transitions that animate the old secret across a navigation boundary.
@@ -295,17 +288,9 @@ Optional copy:
 
 ## 13. Result screen
 
-Before reveal:
-
-```text
-READY?
-
-Vote manually first.
-
-[ Reveal Result ]
-```
-
-After reveal:
+Show the result immediately after the group selects Reveal Result in the
+discussion phase. After an app interruption, keep the result obscured until
+the group explicitly shows it again.
 
 ```text
 THE IMPOSTER(S)
@@ -348,6 +333,9 @@ Generate a new:
 
 The Play Again action should avoid sending the user back through setup unnecessarily.
 
+Starting New Game from results also keeps the current player names and settings
+so the group can edit the setup without re-entering every name.
+
 ---
 
 ## 15. Touch and typography
@@ -368,8 +356,9 @@ Motion should communicate state, not decorate every interaction.
 
 Recommended:
 
-- subtle reveal animation;
+- slide-up cover over the assignment;
 - subtle hide transition;
+- short fade and slide transitions between pages;
 - short starting-player suspense animation;
 - lightweight button feedback.
 
